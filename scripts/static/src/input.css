@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+    --color-slate-900: oklch(0.1076 0.0126 359.82);
+    --color-pink-300: oklch(0.7674 0.0778 1.35);
+    --color-rose-900: oklch(0.4205 0.1352 9.34);
+    --color-rose-700: oklch(0.5955 0.2068 10.9);
+}

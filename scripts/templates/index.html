@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Emotion Detection</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/output.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body class="max-w-screen max-h-s-creen bg-white text-black font-bold">
+  <main class="content m-8" role="main" aria-label="Emotion Detection">
+    <div class="cameraFrame flex flex-row justify-center items-center h-screen gap-4">
+      <img src="{{ url_for('video_feed') }}" alt="Live video feed showing your face" decoding="async" loading="lazy"
+        class="flex-10 border-2 border-yellow-500 rounded-md w-[60%]" />
+      <h1 id="emotion-label"
+        class="flex-2 text-center flex justify-center items-center w-[40%] text-3xl h-[90%] bg-yellow-300 rounded-2xl">Emotion:
+        {{ emotion.capitalize() }}</h1>
+      
+        
+    </div>
+
+  </main>
+
+  <script type="text/javascript">
+    async function updateEmotion() {
+      try {
+        const response = await fetch("/current_emotion");
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+
+        for (let i = 1; i < 4; i++) {
+          document.getElementById("emotion-label").textContent = "Emotion: " + data[0];
+
+        }
+      }
+      catch (error) {
+        console.error("Error fetching emotion data:", error);
+      }
+} 
+    setInterval(updateEmotion, 300); // Update every 2 seconds
+    window.onload = updateEmotion; // Initial call on page load-
+  </script>
+
+</body>
+
+</html>
